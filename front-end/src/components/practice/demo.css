@@ -1,20 +1,18 @@
-/* Navbar main styles */
-.navbar-main {
-    background: #E6E9ED;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e6e9ed;
+    /* background-image: linear-gradient(-45deg, #8067B7, #EC87C0); */
+    /* That circle gap is a real gap, uncomment above */
+    min-height: 100vh;
 }
 
-.navbar-main .logo-image {
-    height: 100px;
-    width: 150px;
-}
-
-/* Tab navigation */
 nav.tab {
     position: relative;
     display: flex;
     align-items: stretch;
-    width: 100%;
-    /* Changed from 100vw to 100% */
+    width: 23rem;
     height: 4rem;
 }
 
@@ -24,33 +22,28 @@ nav.tab.moving .icon {
 
 nav.tab[data-selected="1"] .icon:nth-child(1),
 nav.tab[data-selected="2"] .icon:nth-child(2),
-nav.tab[data-selected="3"] .icon:nth-child(3),
-nav.tab[data-selected="4"] .icon:nth-child(4),
-nav.tab[data-selected="5"] .icon:nth-child(5),
-nav.tab[data-selected="6"] .icon:nth-child(6) {
+nav.tab[data-selected="3"] .icon:nth-child(3) {
     top: -1.5rem;
-    color: #2ABA66;
+    color: #2aba66;
     font-size: 2rem;
-    transition: top 0.3s, color 0.3s, font-size 0.3s;
+    transition: 0.3s 0.35s;
     pointer-events: none;
 }
 
-nav.tab[data-selected="1"] .icon:nth-child(1).initialised,
-nav.tab[data-selected="2"] .icon:nth-child(2).initialised,
-nav.tab[data-selected="3"] .icon:nth-child(3).initialised,
-nav.tab[data-selected="4"] .icon:nth-child(4).initialised,
-nav.tab[data-selected="5"] .icon:nth-child(5).initialised,
-nav.tab[data-selected="6"] .icon:nth-child(6).initialised {
-    animation: hide .315s forwards;
+nav.tab[data-selected="1"] .icon.initialised,
+nav.tab[data-selected="2"] .icon.initialised,
+nav.tab[data-selected="3"] .icon.initialised {
+    animation: hide 0.315s forwards;
 }
 
 nav.tab[data-selected="1"] .bar .middle .side:first-child,
 nav.tab[data-selected="3"] .bar .middle .side:last-child {
     flex-grow: 0;
+    /* Sliding works with 2 `flex-grow:1` elements either side of the circle */
+    /* To animate set the one you want to go to 0 */
 }
 
-/* Icons styling */
-.icons {
+nav.tab .icons {
     position: absolute;
     z-index: 2;
     display: flex;
@@ -59,7 +52,7 @@ nav.tab[data-selected="3"] .bar .middle .side:last-child {
     padding: 0 1rem;
 }
 
-.icon {
+nav.tab .icons .icon {
     position: relative;
     top: 0rem;
     width: 4rem;
@@ -67,24 +60,14 @@ nav.tab[data-selected="3"] .bar .middle .side:last-child {
     font-size: 1.5rem;
     text-align: center;
     cursor: pointer;
-    transition: top 0.3s, color 0.3s, font-size 0.3s;
+    transition-delay: 0.0875s;
 }
 
-.icon.initialised {
-    animation: hide2 .175s;
+nav.tab .icons .icon.initialised {
+    animation: hide2 0.175s;
 }
 
-/* Active icon style */
-.icon.active {
-    color: #2ABA66;
-    font-size: 2.2rem;
-    background-color: rgba(0, 0, 0, 0.1);
-    /* Slight background to highlight */
-    transition: color 0.3s, font-size 0.3s;
-}
-
-/* Bar styles */
-.bar {
+nav.tab .bar {
     z-index: 1;
     position: absolute;
     display: flex;
@@ -93,30 +76,29 @@ nav.tab[data-selected="3"] .bar .middle .side:last-child {
     height: 100%;
 }
 
-.cap {
+nav.tab .bar .cap {
     background: white;
     width: 1rem;
 }
 
-.cap:first-child {
+nav.tab .bar .cap:first-child {
     border-bottom-left-radius: 1rem;
     border-top-left-radius: 0.5rem;
 }
 
-.cap:last-child {
+nav.tab .bar .cap:last-child {
     border-bottom-right-radius: 1rem;
     border-top-right-radius: 0.5rem;
     box-shadow: -0.25rem 0 0 white;
 }
 
-/* Middle section and circle */
-.middle {
+nav.tab .bar .middle {
     flex-grow: 1;
     position: relative;
     display: flex;
 }
 
-.circle {
+nav.tab .bar .middle .circle {
     position: relative;
     top: -1.75rem;
     width: 7rem;
@@ -124,13 +106,12 @@ nav.tab[data-selected="3"] .bar .middle .side:last-child {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='92' viewBox='0 0 112 92'%3E%3Ccircle cx='56' cy='36' r='36' fill='%23FFF'/%3E%3Cpath d='M104 35.2L104 35.2c0 26.3-20.9 48.3-47.2 48.8C29.9 84.4 8 62.8 8 36v-0.8c0-4-3.2-7.2-7.2-7.2H0v64h112V28h-0.8C107.2 28 104 31.2 104 35.2z' fill='%23FFF'/%3E%3C/svg%3E");
 }
 
-.side {
+nav.tab .bar .middle .side {
     flex-grow: 1;
     background: white;
-    transition: flex-grow 0.35s ease;
+    transition: 0.35s ease;
 }
 
-/* Animations */
 @keyframes hide {
 
     0%,
