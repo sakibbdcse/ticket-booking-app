@@ -1,48 +1,23 @@
-import * as React from "react";
-import { render } from "react-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faHome,
-    faPlus,
-    faUser,
-    IconDefinition
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useCallback } from "react";
+import { FaBusAlt, FaCar, FaTrain } from "react-icons/fa"
+import "./demo.css";
 
-import "./styles.scss";
-
-interface IconProps {
-    title: string;
-    index: number;
-    faStyle: IconDefinition;
-    active: string;
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-}
-
-const Tab: React.FC<IconProps> = ({
-    title,
-    index,
-    faStyle,
-    onClick,
-    active
-}) => {
+const Tab = ({ index, faStyle, onClick, active }) => {
     return (
         <div data-index={index} className={`icon ${active}`} onClick={onClick}>
-            <FontAwesomeIcon title={title} icon={faStyle} />
+            {faStyle}
         </div>
     );
 };
 
-const Navbar: React.FC = () => {
-    const [moving, setMoving] = React.useState(false);
-    const [selected, setSelected] = React.useState(1);
-    const [prev, setPrev] = React.useState(selected);
-    const [mid, setMid] = React.useState("");
+const DemoNavbar = () => {
+    const [moving, setMoving] = useState(false);
+    const [selected, setSelected] = useState(1);
+    const [prev, setPrev] = useState(selected);
+    const [mid, setMid] = useState("");
 
-    const onClick = (index: number) => (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
+    const onClick = (index) => (event) => {
         event.preventDefault();
-        event.persist();
         setPrev(selected);
         setSelected(index);
         setMid("initialised");
@@ -53,8 +28,8 @@ const Navbar: React.FC = () => {
         }, 750);
     };
 
-    const selectedTab = React.useCallback(
-        (index: number) => {
+    const selectedTab = useCallback(
+        (index) => {
             return selected === index ? "initialised" : "";
         },
         [selected]
@@ -63,25 +38,22 @@ const Navbar: React.FC = () => {
     const Tabs = [
         <Tab
             key="home"
-            title="Home"
             index={1}
-            faStyle={faHome}
+            faStyle={<FaBusAlt />}
             onClick={onClick(1)}
             active={selectedTab(selected)}
         />,
         <Tab
             key="add"
-            title="Add"
             index={2}
-            faStyle={faPlus}
+            faStyle={<FaTrain />}
             onClick={onClick(2)}
             active={mid}
         />,
         <Tab
             key="profile"
-            title="Profile"
             index={3}
-            faStyle={faUser}
+            faStyle={<FaCar />}
             onClick={onClick(3)}
             active={selectedTab(selected)}
         />
@@ -104,14 +76,4 @@ const Navbar: React.FC = () => {
         </nav>
     );
 };
-
-function App() {
-    return (
-        <div className="App">
-            <Navbar />
-        </div>
-    );
-}
-
-const rootElement = document.getElementById("root");
-render(<App />, rootElement);
+export default DemoNavbar;
