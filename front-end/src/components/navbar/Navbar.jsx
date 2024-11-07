@@ -5,18 +5,31 @@ import { FaBusAlt, FaCar, FaTrain } from "react-icons/fa"
 import { IoMdAirplane } from "react-icons/io"
 import { MdEventAvailable } from "react-icons/md"
 import './navbar.css'
-const Tab = ({ title, icon, isActive, onClick }) => {
+
+const Tab = ({ index, title, icon, isActive, onClick }) => {
     return (
-        <div className={`icon ${isActive ? "active" : ""}`} onClick={onClick}>
+        <div data-index={index} className={`icon ${isActive ? "active" : ""}`} onClick={onClick}>
             {icon} {title}
         </div>)
 };
 
 const Navbar = () => {
-    const [selected, setSelected] = useState(1);
-    const handleTabClick = (index) => () => {
+    const [moving, setMoving] = useState(false)
+    const [selected, setSelected] = useState(1)
+    const [prev, SetPrev] = useState(selected)
+    const [mid, setMid] = useState("")
+    const onClick = (index) => (event) => {
+        event.preventDefault();
+        SetPrev(selected);
         setSelected(index);
-    };
+        setMid("initialised");
+        setMoving(True);
+        setTimeout(() => {
+            setMoving(false)
+            setMid("")
+        }, 750)
+
+    }
     return (
         <div className="navbar-main">
             <Link className='navbar-logo' to="/">
